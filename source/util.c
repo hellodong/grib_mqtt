@@ -53,6 +53,32 @@ int get_mac_address(char * mac)
 	return strlen(mac);
 }
 
+
+static int ishex(char ch)
+{
+	if (ch >='0' && ch <= '9')	{
+		return 1;
+	}else if (ch >= 'a' && ch <= 'f'){
+		return 1;
+	}else if (ch >= 'A' && ch <= 'F'){
+		return 1;
+	}
+	return 0;
+}
+
+int mac2string(char *mac, char *str)
+{
+	int length, idx, strIdx;
+	length = strlen(mac);
+	for (idx = 0, strIdx = 0; idx < length; idx++){
+		if (ishex(mac[idx])){
+			str[strIdx++] = mac[idx];
+		}
+	}
+	str[strIdx] = '\0';
+	return strIdx;
+}
+
 int get_mac_address_compact(char * mac)
 {
 	char buf[100];

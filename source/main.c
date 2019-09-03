@@ -21,8 +21,6 @@ int main(int argc, char * argv[])
 	char gw_mac[20];
 	char * server = NULL;
 	int port = 0;
-	int cmd = 0;
-
 
     if (argc >= 3 ) {
         int ch;
@@ -35,7 +33,6 @@ int main(int argc, char * argv[])
                     server = optarg;
                     break;
                 case 'C':
-                    cmd = 1;
                     break;
                 default:
                     break;

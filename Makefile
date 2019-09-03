@@ -7,7 +7,9 @@ BIN:=mqtt_grib
 
 OBJS :=$(BUILD_DIR)/main.o
 OBJS +=$(BUILD_DIR)/cloud.o
-OBJS +=$(BUILD_DIR)/grib_proto.o
+OBJS +=$(BUILD_DIR)/grib.o
+OBJS +=$(BUILD_DIR)/grib_proto_common.o
+OBJS +=$(BUILD_DIR)/grib_gateway_proto.o
 OBJS +=$(BUILD_DIR)/util.o
 
 all:$(BUILD_DIR) $(BIN)

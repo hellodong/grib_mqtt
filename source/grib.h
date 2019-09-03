@@ -7,9 +7,9 @@
 #include <mosquitto.h>
 
 
-int grib_gateway_reqReg(struct mosquitto *mosq);
+int grib_reqReg(struct mosquitto *mosq);
 
-int grib_gateway_statusSet(struct mosquitto *mosq);
+int grib_plat_parse(const char dataStr[]);
 
 int grib_test_reqReg(struct mosquitto *mosq);
 

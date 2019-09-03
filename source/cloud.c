@@ -12,7 +12,7 @@
 
 #include "cloud.h"
 #include "util.h"
-#include "grib_proto.h"
+#include "grib.h"
 
 
 #define MQTTUSRNAME     "dhkswl"
@@ -65,7 +65,8 @@ static void mqtt_on_connect(struct mosquitto *mosq, void *obj, int rc)
             }
         }
 #else
-        grib_test_reqReg(cb.mqtt);
+		grib_reqReg(cb.mqtt);
+        //grib_test_reqReg(cb.mqtt);
 #endif
 	} else if (rc == 4  || rc == 2) {
 		LOG("username/password error, exit");
@@ -114,7 +115,8 @@ static void mqtt_on_message(struct mosquitto *mosq, void *obj,
         corrctTimeRptStatus(NULL);
 	}
 #else
-	LOG("MQTT: %s", data);
+	LOG("MQTT(%d): %s",len, data);
+	grib_plat_parse(data);
 #endif
 }
 
@@ -167,7 +169,7 @@ static bool connect_mqtt()
 	mosquitto_connect_async(cb.mqtt, cb.server, cb.port, keepalive);
 	retFunc = mosquitto_loop_start(cb.mqtt);
     if (!retFunc) {
-       LOG("Mosquitto Loop thread:%ld", retFunc);
+       LOG("Mosquitto Loop thread:%d", retFunc);
     }
     return !!retFunc;
 }

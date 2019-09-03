@@ -17,6 +17,8 @@ time_t get_clock_time(void);
 
 const char * get_time_str(uint32_t ti, char * buf);
 
+int mac2string(char *mac, char *str);
+
 int get_mac_address(char * mac);
 
 ///get mac address with ":"
