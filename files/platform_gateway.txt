@@ -1,0 +1,70 @@
+指令:
+
+Platform --> Gateway:
+{
+	"res": "800",
+	"msg": {
+		"tid": "GRIB_GATEWAY_30ae7b2b4917",
+		"fnl": [{
+			"vl": {
+				"md5sum": "f6668128932180fda90f8a90fd80a",
+				"url": "http://saascloud.oss-cn-shanghai.aliyuncs.com/fireware/fw1566985560775-262176.bin"
+			},
+			"fn": "FirmwareUpgrade",
+			"tp": "e"
+		}]
+	}
+}
+
+Gateway ---> Ubus:
+{
+	"data": 
+	{
+		"arguments": 
+		{
+			"attribute": "gateway.upgrade_firmware",
+			"ep": 1,
+			"value": {
+				"md5sum": "f600f6b5b171b1c19c8eeacdcfde7339",
+				"url": "http://saascloud.oss-cn-shanghai.aliyuncs.com/fireware/fw-1566985560775-262176.bin"
+			},
+			"mac": "30:ae:7b:63:f5:dc"
+		},
+		"id": "FirmwareUpgrade_<mac>",
+		"command": "setAttribute"
+	},
+	"from": "CLOUD",
+	"mac": "30:ae:7b:63:f5:dc",
+	"time": 1567500550,
+	"to": "GATEWAT
+}
+
+Ubus ---> Gateway:
+{
+	"to": "CLOUD",
+	"from": "GATEWAY",
+	"type": "cmdResult",
+	"data": {
+		"id": "200319003606986752",
+		"code": 97
+	},
+	"time": 1567500551,
+	"deviceCode": "0100110c-ddb6-4e2b-936b-ff98fc8ed16a",
+	"mac": "30:ae:7b:63:f5:dc"
+}
+
+Gateway --> Platform:
+{
+	"req": "Set",
+	"msg": {
+		"tid": "GRIB_GATEWAY_30ae7b2b4917",
+		"fnl": [{
+			"vl": 97,
+			"fn": "FirmwareUpgrade",
+			"tp": "s"
+		}]
+	}
+}
+
+
+
