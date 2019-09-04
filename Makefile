@@ -1,7 +1,7 @@
 BUILD_DIR:=build
 SOURCE_DIR:=source
 CC:=gcc
-CFLAGS:=-Wall -g
+CFLAGS:= -g -Wall -Wno-unused-variable -Wno-unused-function 
 LDFLAGS:=-ljson-c -lpthread -lmosquitto
 BIN:=mqtt_grib
 

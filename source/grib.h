@@ -5,11 +5,14 @@
 
 
 #include <mosquitto.h>
+#include "dusun/dusun.h"
 
 
 int grib_reqReg(struct mosquitto *mosq);
 
-int grib_plat_parse(const char dataStr[]);
+json* grib_plat_parse(const char dataStr[]);
+
+json* ubus_conv2_grib(json *ori, char topic[]);
 
 int grib_test_reqReg(struct mosquitto *mosq);
 
