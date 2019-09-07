@@ -161,8 +161,11 @@ static void mqtt_on_message(struct mosquitto *mosq, void *obj,
 	LOG("MQTT(%d): %s", len, data);
     json *packet = NULL;
     packet = grib_plat_parse(data);
-    proto_handle_packet(packet);
-    json_put(packet);
+    if (packet){    
+        proto_handle_packet(packet);
+        LOG("Intern:%s", json_to_str(packet));
+        json_put(packet);
+    }
 #endif
 }
 
@@ -228,13 +231,17 @@ static bool connect_mqtt()
 
 	char mqtt_name[128];
 	char mqtt_pass[128];
+#if 0
 	if (system_get_mqtt_username_password(mqtt_name, mqtt_pass) != 0) {
 	    sprintf(mqtt_name, "%s", MQTTUSRNAME);
         sprintf(mqtt_pass, "%s", MQTTPASSWD);
 		system_set_mqtt_username_password(mqtt_name, mqtt_pass);
 	} 
+#else
+	sprintf(mqtt_name, "%s", MQTTUSRNAME);
+    sprintf(mqtt_pass, "%s", MQTTPASSWD);
+#endif
     LOG("username : %s, passwd:%s", mqtt_name, mqtt_pass);
-
 #if 0
 	mosquitto_username_pw_set(cb.mqtt, username, username);
 #else

@@ -34,6 +34,7 @@
 #define UBUS_DATAOBJ_TAG        "data"
 #define UBUS_IDSTR_TAG          "id"
 #define UBUS_COMMAND_TAG        "command"
+#define UBUS_CODE_TAG           "code"
 #define UBUS_ARGOBJ_TAG         "arguments"
 #define UBUS_ATTRSTR_TAG        "attribute"
 #define UBUS_VLOBJ_TAG          "value"
@@ -44,6 +45,7 @@
 #define UBUS_TYPECMDRT_VAL      "cmdResult"
 #define UBUS_TYPECMD_VAL        "cmd"
 
+#define UBUS_CLOUD_TAG          "CLOUD"
 #define UBUS_DEVSTR_VAL         "GATEWAY"
 #define UBUS_GPSTR_VAL          "GREEPOWER"
 
@@ -60,7 +62,7 @@ json* makeGribProto(const char *cmdStr, const char *didStr, json *fArray);
 
 int parseGribProto(json *root, char cmdStr[], char didStr[], json **fArray);
 
-int parseUbusProto(json *root, char dev[], int *ep, char cmd[], json **value);
+int parseUbusProto(json *root, char dev[], char type[], int *ep, char att[], json **value);
 
 json* makeUbusProto(const char from[], const char to[], const char mac[],  const char cmdType[], json *dataPtr);
 

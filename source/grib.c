@@ -64,7 +64,6 @@ json* grib_plat_parse(const char dataStr[])
 	}else {
 		LOG("Erro Message Formate");
 	}
-
 	json_put(root);
 
 	return ubusJsonRoot;
@@ -74,19 +73,19 @@ json* ubus_conv2_grib(json *ori, char topic[])
 {
     json *root = NULL, *jsonVal =NULL;
     int ret, ep;
-    char devStr[128], cmdStr[128], idStr[256];
+    char devStr[128], typeStr[128], attrStr[128], idStr[256];
 
-    ret = parseUbusProto(ori, devStr, &ep, cmdStr, &jsonVal);
+    ret = parseUbusProto(ori, devStr, typeStr ,&ep, attrStr, &jsonVal);
     if (0 != ret){
         LOG("Parse Ubus Message Error\r\n");
         return NULL;
     }
-    LOG("Dev:%s, Cmd:%s", devStr, cmdStr);
+    LOG("Device:%s ", devStr);
     strcpy(topic, GRIB_PLATFORSET_TOPIC);
     if (strcmp(devStr, UBUS_DEVSTR_VAL) == 0 ){     //gateway
-        root = ubus_gateway_covt_grib(cmdStr, jsonVal);
+        root = ubus_gateway_covt_grib(typeStr, attrStr, jsonVal);
     }else if (strcmp(devStr, UBUS_GPSTR_VAL) == 0){  //greenpower
-
+        /* TODO */
     }
 
 	return root;
