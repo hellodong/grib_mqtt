@@ -35,7 +35,6 @@ Gateway ---> Ubus:
 	},
 	"from": "CLOUD",
 	"mac": "30:ae:7b:63:f5:dc",
-	"time": 1567500550,
 	"to": "GATEWAT
 }
 
@@ -65,6 +64,100 @@ Gateway --> Platform:
 		}]
 	}
 }
+
+{
+	"res":"100",
+	"msg":
+	{
+		"tid":"GRIB_GATEWAY_30ae7b2b4917",
+		"fnl":
+		[
+			{
+				"fn":"Reboot",
+				"tp":"e",
+				"vl":{
+					"passwd":"1234556",
+					"startTime": ,
+					"entTime":
+				}
+			}
+		]
+	}
+}
+
+指令：一键回连
+
+platform -->gateway:
+{
+	"res":"100",
+	"msg":{
+		"tid":"GRIB_GATEWAY_123456789",
+		"fnl":[
+			{
+				"fn":"RemoteShell",
+				"tp":"e",
+				"vl":{
+					"server": "114.215.195.44",
+					"port": 3234
+				}
+			}
+		]
+	}
+}
+
+gateway-->ubus:
+{
+	"data": {
+		"arguments": {
+			"attribute": "gateway.remote_shell",
+			"ep": 1,
+			"value": {
+				"server": "114.215.195.44",
+				"port": 3234
+			},
+			"mac": "30:ae:7b:2b:49:17"
+		},
+		"id": "201014180977942528",
+		"command": "setAttribute"
+	},
+	"deviceCode": "01000580-554a-4c2c-828a-311fe9d3a4cc",
+	"from": "CLOUD",
+	"mac": "30:ae:7b:2b:49:17",
+	"messageId": 2612,
+	"time": 1567666293,
+	"to": "GATEWAY",
+	"type": "cmd"
+}
+
+ubus --> gateway:
+{
+	"to": "CLOUD",
+	"from": "GATEWAY",
+	"type": "cmdResult",
+	"data": {
+		"id": "201014180977942528",
+		"code": 0
+	},
+	"time": 1567666293,
+	"deviceCode": "0100118a-5ebf-4217-94e3-12bc8db2ce20",
+	"mac": "30:ae:7b:2b:49:17"
+}
+
+gateway --> platform:
+{
+	"req":"Set",
+	"msg":{
+		"tid":"GRIB_GATEWAY_123456789",
+		"fnl":[
+			{
+				"fn":"RemoteShell",
+				"tp":"e",
+				"vl":0
+			}
+		]
+	}
+}
+
 
 
 

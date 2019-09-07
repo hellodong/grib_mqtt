@@ -1,0 +1,257 @@
+
+
+
+ZB3 Door Sensor:
+
+Ubus --> GW:
+{
+	"time": 1567683977,
+	"from": "GREENPOWER",
+	"type": "reportAttribute",
+	"to": "CLOUD",
+	"data": {
+		"attribute": "mod.new_device_added",
+		"mac": "00155f007483a275",
+		"value": {
+			"mac": "00155f007483a275",
+			"type": "1208",
+			"model": "dusun",
+			"subtype": "",
+			"online": 1,
+			"version": "1.0",
+			"ModelStr": "DoWi",
+			"battery": 100,
+			"epList": [{
+				"type": "1208",
+				"ep": "242"
+			}]
+		}
+	}
+}
+
+GW --> Platform:topic [PLATFORM/Set]
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_DoorSensor_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"Battery",
+				"tp":"s",
+				"vl":100
+			},
+			{
+				"fn":"Version",
+				"tp":"s",
+				"vl":"1.0"
+			}，
+			{
+				"fn":"Online",
+				"tp":"s",
+				"vl":1
+			}
+		]
+	}
+}
+
+Ubus --> GW:
+{
+    "from":"GREENPOWER",
+    "time":1567845865,
+    "to":"CLOUD",
+    "data":{
+        "attribute":"device.zone_status",
+        "mac":"00155f007483a275",
+        "ep":242,
+        "value":{
+            "ep":242,
+            "zone":"door",
+            "value":"0",
+            "ModelStr":"DoWi"
+        }
+    },
+    "deviceCode":"00000",
+    "type":"reportAttribute",
+    "mac":"30:ae:7b:63:f8:32"
+}
+
+GW --> Platform:topic [PLATFORM/Set]
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_DoorSensor_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"DoorStatus",
+				"tp":"s",
+				"vl":0 -- closed,  1 -- opened
+			}
+		]
+	}
+}
+
+ZB3 PIR 设备添加:
+Ubus-->Gateway:
+{
+	"from": "GREENPOWER",
+	"time": 1567847196,
+	"to": "CLOUD",
+	"data": {
+		"attribute": "mod.new_device_added",
+		"mac": "00155f007483062c",
+		"value": {
+			"type": "1209",
+			"mac": "00155f007483062c",
+			"subtype": "",
+			"model": "Dusun",
+			"online": 1,
+			"version": "1.0",
+			"battery": 85,
+			"epList": [{
+				"type": "1209",
+				"ep": "242"
+			}],
+			"ModelStr": "MoSe 02"
+		}
+	},
+	"deviceCode": "00000",
+	"type": "reportAttribute",
+	"mac": "30:ae:7b:63:f8:32"
+}
+
+Gateway-->Platform   [PLATFORM/Set]:
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_PIRSensor_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"Battery",
+				"tp":"s",
+				"vl":100
+			},
+			{
+				"fn":"Version",
+				"tp":"s",
+				"vl":"1.0"
+			}，
+			{
+				"fn":"Online",
+				"tp":"s",
+				"vl":1
+			}
+		]
+	}
+}
+
+Ubus-->Gateway:
+{
+	"from": "GREENPOWER",
+	"time": 1567847655,
+	"to": "CLOUD",
+	"data": {
+		"attribute": "device.zone_status",
+		"mac": "00155f007483062c",
+		"ep": 242,
+		"value": {
+			"ep": 242,
+			"zone": "pir",
+			"value": "0",
+			"ModelStr": "MoSe 02"
+		}
+	},
+	"deviceCode": "00000",
+	"type": "reportAttribute",
+	"mac": "30:ae:7b:63:f8:32"
+}
+
+Gateway-->Platform  [PLATFORM/Set]:
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_PIRSensor_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"PIRStatus",
+				"tp":"s",
+				"vl":0 -- No Person,  1 -- Have Person
+			}
+		]
+	}
+}
+
+ZB3 Leakage Sensor:
+
+Platform --> Gateway:
+{
+	"from": "GREENPOWER",
+	"time": 1567848177,
+	"to": "CLOUD",
+	"data": {
+		"attribute": "mod.new_device_added",
+		"mac": "00155f0074830c38",
+		"value": {
+			"type": "1210",
+			"mac": "00155f0074830c38",
+			"subtype": "",
+			"model": "Dusun",
+			"online": 1,
+			"version": "1.0",
+			"battery": 100,
+			"epList": [{
+				"type": "1210",
+				"ep": "242"
+			}],
+			"ModelStr": "Leak"
+		}
+	},
+	"deviceCode": "00000",
+	"type": "reportAttribute",
+	"mac": "30:ae:7b:63:f8:32"
+}
+
+Gateway --> Ubus:
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_LeakSensor_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"Battery",
+				"tp":"s",
+				"vl":100
+			},
+			{
+				"fn":"Version",
+				"tp":"s",
+				"vl":"1.0"
+			}，
+			{
+				"fn":"Online",
+				"tp":"s",
+				"vl":1
+			}
+		]
+	}
+}
+
+Ubus --> Gateway:
+{
+	"from": "GREENPOWER",
+	"time": 1567848373,
+	"to": "CLOUD",
+	"data": {
+		"attribute": "device.zone_status",
+		"mac": "00155f0074830c38",
+		"ep": 242,
+		"value": {
+			"ep": 242,
+			"zone": "leak",
+			"value": "0",    0 -- 无水， 1 -- 有水
+			"ModelStr": "Leak"
+		}
+	},
+	"deviceCode": "00000",
+	"type": "reportAttribute",
+	"mac": "30:ae:7b:63:f8:32"
+}
