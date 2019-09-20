@@ -62,7 +62,7 @@ int parseGribProto(json *root, char resStr[], char didStr[], json **fArray)
 	return msgType;
 }
 
-int parseUbusProto(json *root, char dev[], char type[], int *ep, char att[], json **value)
+int parseUbusProto(json *root, char dev[], char type[], int *ep, char mac[], char att[], json **value)
 {
     const char *devStr = NULL, *typeStr = NULL;
     json *dataJson, *argJson;
@@ -70,6 +70,7 @@ int parseUbusProto(json *root, char dev[], char type[], int *ep, char att[], jso
     dev[0] = '\0';
     type[0] = '\0';
     att[0] = '\0';
+    mac[0] = '\0';
     /* root */
     devStr = json_get_str(root, UBUS_FROM_TAG);         //from
     typeStr = json_get_str(root, UBUS_TYPE_TAG);        //type
@@ -85,7 +86,7 @@ int parseUbusProto(json *root, char dev[], char type[], int *ep, char att[], jso
     LOG("From:%s, Type:%s, EP:%d", devStr, typeStr, *ep);
 
     /* data */
-    const char *attrStr;
+    const char *attrStr, *macStr;
     if (strcmp(typeStr, UBUS_TYPERP_VAL) == 0){          //reportAttribute
        *value = json_get_obj(dataJson, UBUS_VLOBJ_TAG); 
        if (*value == NULL){
@@ -98,6 +99,12 @@ int parseUbusProto(json *root, char dev[], char type[], int *ep, char att[], jso
            return 3;
        }
        strcpy(att, attrStr);
+       macStr = json_get_str(dataJson, UBUS_MACSTR_TAG);
+       if (macStr){
+            strcpy(mac, macStr);
+       }else{
+            LOG("Parse Ubus Mac Value Error");
+       }
     }else if (strcmp(typeStr, UBUS_TYPECMDRT_VAL) == 0){ //cmdReport
         *value = dataJson;
     }
@@ -151,3 +158,4 @@ json *makeUbusCmdDataJson(const char attr[], const char mac[], int ep, json *vlJ
     json_add_obj(dataJson, UBUS_ARGOBJ_TAG, argJson);
     return dataJson;
 } 
+

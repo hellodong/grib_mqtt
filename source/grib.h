@@ -10,6 +10,8 @@
 
 int grib_reqReg(struct mosquitto *mosq);
 
+void grib_start_init(void);
+
 json* grib_plat_parse(const char dataStr[]);
 
 json* ubus_conv2_grib(json *ori, char topic[]);

@@ -23,6 +23,7 @@
 #define GRIB_PLATFORSET_TOPIC   "PLATFORM/Set"
 
 #define GRIB_TAG				"GRIB"
+#define ZB3_TAG                 "ZB3"
 
 #define GRIB_TOPIC_REG			"_Reg"
 #define GRIB_TOPIC_EXE			"_Exe"
@@ -47,7 +48,7 @@
 
 #define UBUS_CLOUD_TAG          "CLOUD"
 #define UBUS_DEVSTR_VAL         "GATEWAY"
-#define UBUS_GPSTR_VAL          "GREEPOWER"
+#define UBUS_GPSTR_VAL          "GREENPOWER"
 
 
 typedef enum 
@@ -62,7 +63,7 @@ json* makeGribProto(const char *cmdStr, const char *didStr, json *fArray);
 
 int parseGribProto(json *root, char cmdStr[], char didStr[], json **fArray);
 
-int parseUbusProto(json *root, char dev[], char type[], int *ep, char att[], json **value);
+int parseUbusProto(json *root, char dev[], char type[], int *ep, char mac[], char att[], json **value);
 
 json* makeUbusProto(const char from[], const char to[], const char mac[],  const char cmdType[], json *dataPtr);
 

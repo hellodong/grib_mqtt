@@ -6,45 +6,53 @@
 
 #include "grib_proto_common.h"
 #include "grib_gateway_proto.h"
+#include "grib_zb3_proto.h"
 #include "grib.h"
 
-
-static json* gribExeProto_covt_ubusProto(const char resStr[], const char didStr[], json *fnlJsonArray);
-
-
-#if 0
-int grib_reqReg(struct mosquitto *mosq)
+static int zb3_tidCmp(const char didStr[])
 {
-	json *root = NULL;
-	char didStr[128], topicReg[256], topicExe[256], topicDel[256];
+    char did[256];
+    int zb3StrLen;
 
-	root = grib_gateway_regJson(didStr);
-	if (NULL == root){
-		LOG("Gateway Register Json Error");
-		return 1;
-	}
-	snprintf(topicReg, sizeof(topicReg),"%s/%s", didStr, GRIB_TOPIC_REG);
-	snprintf(topicExe, sizeof(topicExe), "%s/%s", didStr, GRIB_TOPIC_EXE);
-	snprintf(topicDel, sizeof(topicDel), "%s/%s", didStr, GRIB_TOPIC_DEL);
-	LOG("Reg Topic:%s", topicReg);
-	LOG("Exe Topic:%s", topicExe);
-	LOG("Del Topic:%s", topicDel);
-    mosquitto_subscribe(mosq, NULL, topicReg, 1);
-    mosquitto_subscribe(mosq, NULL, topicExe, 1);
-    mosquitto_subscribe(mosq, NULL, topicDel, 1);
-
-    const char *jsontoStr = NULL;
-    int mid, length;
-
-    jsontoStr = json_to_str(root);
-    length = strlen(jsontoStr);
-    LOG("Send:%s", jsontoStr);
-    mosquitto_publish(mosq, &mid, GRIB_PALTFORMREG_TOPIC , length, jsontoStr, 1, 0);
-    json_put(root);
-    root = NULL;
-	return 0;
+    strcpy(did, didStr); 
+    zb3StrLen = strlen(ZB3_TAG);
+    did[zb3StrLen] = '\0';
+    if (strcmp(did, ZB3_TAG) == 0){
+        return 0;
+    }
+    return 1;
 }
+
+static json* gribExeProto_covt_ubusProto(const char resStr[], const char didStr[], json *fnlJsonArray)
+{
+    int gwCmpRet= 1, zbCmpRet = 1;
+
+	LOG("Response:%s, Tid:%s", resStr, didStr);
+#if 0
+    if (strcmp(resStr, "100") != 0){
+        LOG("Bad Response Header:%s", resStr);
+        return NULL;
+    }
 #endif
+    gwCmpRet = grib_gateway_tidCmp(didStr);
+    zbCmpRet = zb3_tidCmp(didStr);
+
+    json *root = NULL;
+    if (0 == gwCmpRet){                         //gateway;
+        root = grib_gateway_covt_ubus(fnlJsonArray);
+    }else if (0 == zbCmpRet){                   //greenpower
+        root = grib_zb3_covt_ubus(fnlJsonArray, didStr);
+    }else{
+        LOG("Incorrect Device ID:%s", didStr);
+    }
+
+	return root;
+}
+
+void grib_start_init(void)
+{
+    grib_zb3_init();
+}
 
 json* grib_plat_parse(const char dataStr[])
 {
@@ -73,9 +81,9 @@ json* ubus_conv2_grib(json *ori, char topic[])
 {
     json *root = NULL, *jsonVal =NULL;
     int ret, ep;
-    char devStr[128], typeStr[128], attrStr[128], idStr[256];
+    char devStr[128], typeStr[128], macStr[128] ,attrStr[128], idStr[256];
 
-    ret = parseUbusProto(ori, devStr, typeStr ,&ep, attrStr, &jsonVal);
+    ret = parseUbusProto(ori, devStr, typeStr ,&ep, macStr, attrStr, &jsonVal);
     if (0 != ret){
         LOG("Parse Ubus Message Error\r\n");
         return NULL;
@@ -85,31 +93,9 @@ json* ubus_conv2_grib(json *ori, char topic[])
     if (strcmp(devStr, UBUS_DEVSTR_VAL) == 0 ){     //gateway
         root = ubus_gateway_covt_grib(typeStr, attrStr, jsonVal);
     }else if (strcmp(devStr, UBUS_GPSTR_VAL) == 0){  //greenpower
-        /* TODO */
-    }
-
-	return root;
-}
-
-static json* gribExeProto_covt_ubusProto(const char resStr[], const char didStr[], json *fnlJsonArray)
-{
-    int gwCmpRet= 1, zbCmpRet = 1;
-
-	LOG("Response:%s, Tid:%s", resStr, didStr);
-#if 0
-    if (strcmp(resStr, "100") != 0){
-        LOG("Bad Response Header:%s", resStr);
-        return NULL;
-    }
-#endif
-    gwCmpRet = grib_gateway_tidCmp(didStr);
-    json *root = NULL;
-    if (0 == gwCmpRet){                         //gateway;
-        root = grib_gateway_covt_ubus(fnlJsonArray);
-    }else if (0 == zbCmpRet){                   //greenpower
-        /* TODO */
+        root = ubus_zb3_covt_grib(typeStr, macStr, attrStr, jsonVal);
     }else{
-        LOG("Incorrect Device ID:%s", didStr);
+        LOG("Unkonwn Device(%s)", devStr);
     }
 
 	return root;
