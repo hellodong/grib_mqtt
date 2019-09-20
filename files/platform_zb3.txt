@@ -1,4 +1,83 @@
-
+{
+	"from": "GREENPOWER",
+	"data": {
+		"value": {
+			"device_list": [{
+				"mac": "00155f007483a275",
+				"subtype": "",
+				"battery": 100,
+				"type": "1208",
+				"version": "1.0",
+				"epList": [{
+					"type": "1208",
+					"ep": "242"
+				}],
+				"model": "Dusun",
+				"online": 1,
+				"ModelStr": "DoWi"
+			}, {
+				"mac": "00155f007483062c",
+				"subtype": "",
+				"battery": 85,
+				"type": "1209",
+				"version": "1.0",
+				"epList": [{
+					"type": "1209",
+					"ep": "242"
+				}],
+				"model": "Dusun",
+				"online": 1,
+				"ModelStr": "MoSe 02"
+			}, {
+				"mac": "00155f0074830c38",
+				"subtype": "",
+				"battery": 100,
+				"type": "1210",
+				"version": "1.0",
+				"epList": [{
+					"type": "1210",
+					"ep": "242"
+				}],
+				"model": "Dusun",
+				"online": 1,
+				"ModelStr": "Leak"
+			}, {
+				"mac": "14b457fffe8036a8",
+				"subtype": "",
+				"battery": 100,
+				"type": "1218",
+				"version": "1.5",
+				"epList": [{
+					"type": "1218",
+					"ep": "01"
+				}],
+				"model": "Dusun",
+				"online": 1,
+				"ModelStr": "SmartOutlet"
+			}, {
+				"mac": "14b457fffe7f96a3",
+				"subtype": "",
+				"battery": 100,
+				"type": "1218",
+				"version": "1.5",
+				"epList": [{
+					"type": "1218",
+					"ep": "01"
+				}],
+				"model": "Dusun",
+				"online": 1,
+				"ModelStr": "SmartOutlet"
+			}]
+		},
+		"attribute": "mod.device_list",
+		"mac": "30:ae:7b:63:f8:32"
+	},
+	"to": "CLOUD",
+	"time": 1567992185,
+	"deviceCode": "00000",
+	"mac": "30:ae:7b:63:f8:32",
+	"type": "reportAttribute"
+}
 
 
 ZB3 Door Sensor:
@@ -182,7 +261,7 @@ Gateway-->Platform  [PLATFORM/Set]:
 
 ZB3 Leakage Sensor:
 
-Platform --> Gateway:
+Ubus --> Gateway:
 {
 	"from": "GREENPOWER",
 	"time": 1567848177,
@@ -210,7 +289,7 @@ Platform --> Gateway:
 	"mac": "30:ae:7b:63:f8:32"
 }
 
-Gateway --> Ubus:
+Gateway --> Platform:
 {
 	"req":"Set",
 	"msg":{
@@ -255,3 +334,496 @@ Ubus --> Gateway:
 	"type": "reportAttribute",
 	"mac": "30:ae:7b:63:f8:32"
 }
+
+Gateway-->Platform  [PLATFORM/Set]:
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_LeakSensor_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"LeakStatus",
+				"tp":"s",
+				"vl":0 -- No Person,  1 -- Have Person
+			}
+		]
+	}
+}
+
+ZB3 SmartPlug:
+Ubus -->Gateway:
+
+/* information */
+{
+	"from": "GREENPOWER",
+	"data": {
+		"value": {
+			"mac": "14b457fffe7f96a3",
+			"subtype": "",
+			"battery": 100,
+			"type": "1218",
+			"version": "1.5",
+			"epList": [{
+				"type": "1218",
+				"ep": "01"
+			}],
+			"model": "Dusun",
+			"online": 1,
+			"ModelStr": "SmartOutlet"
+		},
+		"attribute": "mod.new_device_added",
+		"mac": "14b457fffe7f96a3"
+	},
+	"to": "CLOUD",
+	"time": 1567991542,
+	"deviceCode": "00000",
+	"mac": "30:ae:7b:63:f8:32",
+	"type": "reportAttribute"
+}
+
+/* Energy */
+{
+	"from": "GREENPOWER",
+	"data": {
+		"value": {
+			"ep": 1,
+			"value": "0.000000",
+			"unit": "kWh",
+			"ModelStr": "SmartOutlet"
+		},
+		"attribute": "device.meter.energy",
+		"ep": 1,
+		"mac": "14b457fffe8036a8"
+	},
+	"to": "CLOUD",
+	"time": 1567990497,
+	"deviceCode": "00000",
+	"mac": "30:ae:7b:63:f8:32",
+	"type": "reportAttribute"
+}
+
+/* Power */
+{
+	"from": "GREENPOWER",
+	"data": {
+		"value": {
+			"ep": 1,
+			"value": "0.000000",
+			"unit": "kW",
+			"ModelStr": "SmartOutlet"
+		},
+		"attribute": "device.meter.power",
+		"ep": 1,
+		"mac": "14b457fffe8036a8"
+	},
+	"to": "CLOUD",
+	"time": 1567990497,
+	"deviceCode": "00000",
+	"mac": "30:ae:7b:63:f8:32",
+	"type": "reportAttribute"
+}
+
+/* Current */
+Ubus --> Gateway:
+{
+	"from": "GREENPOWER",
+	"data": {
+		"value": {
+			"ep": 1,
+			"value": "0.000",
+			"unit": "A",
+			"ModelStr": "SmartOutlet"
+		},
+		"attribute": "device.meter.current",
+		"ep": 1,
+		"mac": "14b457fffe8036a8"
+	},
+	"to": "CLOUD",
+	"time": 1567990497,
+	"deviceCode": "00000",
+	"mac": "30:ae:7b:63:f8:32",
+	"type": "reportAttribute"
+}
+
+/* Voltage */
+{
+	"mac": "30:ae:7b:2b:49:17",
+	"from": "GREENPOWER",
+	"to": "CLOUD",
+	"deviceCode": "00000",
+	"type": "reportAttribute",
+	"time": 1568095691,
+	"data": {
+		"attribute": "device.meter.voltage",
+		"mac": "14b457fffe7f96a3",
+		"ep": 1,
+		"value": {
+			"ep": 1,
+			"unit": "V",
+			"value": "230.900",
+			"ModelStr": "SmartOutlet"
+		}
+	}
+}
+
+/* Onoff */
+{
+	"from": "GREENPOWER",
+	"data": {
+		"value": {
+			"ep": 1,
+			"value": 1,					0 -- Off, 1 -- On
+			"ModelStr": "SmartOutlet"
+		},
+		"attribute": "device.onoff",
+		"ep": 1,
+		"mac": "14b457fffe8036a8"
+	},
+	"to": "CLOUD",
+	"time": 1567990497,
+	"deviceCode": "00000",
+	"mac": "30:ae:7b:63:f8:32",
+	"type": "reportAttribute"
+}
+
+/* status */
+{
+	"mac": "30:ae:7b:2b:49:17",
+	"from": "GREENPOWER",
+	"to": "CLOUD",
+	"deviceCode": "00000",
+	"type": "reportAttribute",
+	"time": 1568099001,
+	"data": {
+		"attribute": "device.status",
+		"mac": "14b457fffe7f96a3",
+		"value": {
+			"online": 0,
+			"version": "1.5",
+			"battery": 100,
+			"type": "1218",
+			"subtype": "",
+			"ModelStr": "SmartOutlet"
+		}
+	}
+}
+
+Gateway-->Platform:
+
+/* information */
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_SmartPlug_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"Version",
+				"tp":"s",
+				"vl":"1.5"
+			}£¬
+			{
+				"fn":"Online",
+				"tp":"s",
+				"vl":1
+			}
+		]
+	}
+}
+
+/* Energy */
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_SmartPlug_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"Energy_Kwh",
+				"tp":"s",
+				"vl":"0.000"
+			}
+		]
+	}
+}
+
+/* Power */
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_SmartPlug_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"Power_Kw",
+				"tp":"s",
+				"vl":"0.000"
+			}
+		]
+	}
+}
+
+/* Current */
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_SmartPlug_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"Current_A",
+				"tp":"s",
+				"vl":"1.5"
+			}
+		]
+	}
+}
+
+
+/* Onoff */
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_SmartPlug_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"Onoff",
+				"tp":"s",
+				"vl":"0" 		0 -- off, 1 -- on
+			}
+		]
+	}
+}
+
+ZB3 Switch
+
+ubus->Gateway:
+
+/* new_device_added */
+{
+	"type": "reportAttribute",
+	"from": "GREENPOWER",
+	"to": "CLOUD",
+	"mac": "30:ae:7b:2b:49:17",
+	"deviceCode": "00000",
+	"time": 1568104876,
+	"data": {
+		"value": {
+			"mac": "14b457fffe83841a",
+			"type": "1212",
+			"subtype": "",
+			"model": "dusun",
+			"online": 1,
+			"version": "1.1",
+			"battery": 100,
+			"epList": [{
+				"type": "1212",
+				"ep": "01"
+			}, {
+				"type": "1212",
+				"ep": "02"
+			}],
+			"ModelStr": "Switch"
+		},
+		"attribute": "mod.new_device_added",
+		"mac": "14b457fffe83841a"
+	}
+}
+
+/* status */
+{
+	"from": "GREENPOWER",
+	"type": "reportAttribute",
+	"to": "CLOUD",
+	"deviceCode": "00000",
+	"time": 1568109482,
+	"mac": "30:ae:7b:2b:49:17",
+	"data": {
+		"attribute": "device.status",
+		"mac": "14b457fffe83841a",
+		"value": {
+			"online": 1,
+			"ModelStr": "Switch",
+			"version": "1.1",
+			"battery": 100,
+			"type": "1212",
+			"subtype": "",
+			"time": "1568109482"
+		}
+	}
+}
+
+/* swtich */
+{
+	"type": "reportAttribute",
+	"from": "GREENPOWER",
+	"to": "CLOUD",
+	"mac": "30:ae:7b:2b:49:17",
+	"deviceCode": "00000",
+	"time": 1568104877,
+	"data": {
+		"value": {
+			"ep": 1,
+			"value": 0,						0 -- ¶Ï¿ª£¬ 1 -- ±ÕºÏ
+			"ModelStr": "Switch"
+		},
+		"attribute": "device.switch.onoff",
+		"ep": 1,
+		"mac": "14b457fffe83841a"
+	}
+}
+
+{
+	"type": "reportAttribute",
+	"from": "GREENPOWER",
+	"to": "CLOUD",
+	"mac": "30:ae:7b:2b:49:17",
+	"deviceCode": "00000",
+	"time": 1568104877,
+	"data": {
+		"value": {
+			"ep": 2,
+			"value": 0,				
+			"ModelStr": "Switch"
+		},
+		"attribute": "device.switch.onoff",
+		"ep": 2,
+		"mac": "14b457fffe83841a"
+	}
+}
+
+/* DoorLock Add Password */
+Platform --> Gateway:
+{
+	"res": "800",
+	"msg": {
+		"tid": "ZB3_DoorLock_00158d0001b65c71",
+		"fnl": [{
+			"vl": "00100001e2400600000e10",
+			"fn": "PasswdAdd",
+			"tp": "e"
+		}]
+	}
+}
+Gateway -->ubus:
+{
+	"to": "GREENPOWER",
+	"from": "CLOUD",
+	"type": "cmd",
+	"data": {
+		"id": "ZB3_DoorLock_00158d0001b65c71-PasswdAdd",
+		"command": "setAttribute",
+		"arguments": {
+			"mac": "00158d0001b65c71",
+			"ep": "1",
+			"attribute": "device.lock.add_password",
+			"value": {
+				"passId": 1,
+				"passType": 0,
+				"passVal1": 123456,
+				"passVal2": 0,
+				"startTime": 1568973293,
+				"endTime": 1568976893
+			}
+		}
+	}
+}
+Ubus --> Gateway:
+{
+	"from": "GREENPOWER",
+	"to": "CLOUD",
+	"deviceCode": "00000",
+	"data": {
+		"code": 199,
+		"id": "ZB3_DoorLock_00158d0001b65c71-PasswdAdd"
+	},
+	"time": 1568973657,
+	"type": "cmdResult",
+	"mac": "30:ae:7b:2b:49:17"
+}
+Gateway --> Platform:
+{
+	"req": "Set",
+	"msg": {
+		"tid": "ZB3_DoorLock_00158d0001b65c71",
+		"fnl": [{
+			"vl": "199",
+			"fn": "PasswdAdd",
+			"tp": "s"
+		}]
+	}
+}
+
+/* Password Delete */
+Platform --> Gateway:
+{
+	"res": "800",
+	"msg": {
+		"tid": "ZB3_DoorLock_00158d0001b65c71",
+		"fnl": [{
+			"vl": "0010",
+			"fn": "PasswdDel",
+			"tp": "e"
+		}]
+	}
+}
+Gateway -->ubus:
+{
+	"to ": "GREENPOWER ",
+	"from ": "CLOUD ",
+	"type ": "cmd ",
+	"data ": {
+		"id ": "ZB3_DoorLock_00158d0001b65c71-PasswdDel",
+		"command ": "setAttribute ",
+		"arguments ": {
+			"mac ": "00158 d0001b65c71 ",
+			"ep": "1",
+			"attribute": "device.lock.del_password",
+			"value": {
+				"passId": 1,
+				"passType": 0,
+				"clearAll": 0
+			}
+		}
+	}
+}
+Ubus --> Gateway:
+{
+	"from": "GREENPOWER",
+	"to": "CLOUD",
+	"deviceCode": "00000",
+	"data": {
+		"code": 0,
+		"id": "ZB3_DoorLock_00158d0001b65c71-PasswdDel"
+	},
+	"time": 1568973657,
+	"type": "cmdResult",
+	"mac": "30:ae:7b:2b:49:17"
+}
+Gateway --> Platform:
+{
+	"req": "Set",
+	"msg": {
+		"tid": "ZB3_DoorLock_00158d0001b65c71",
+		"fnl": [{
+			"vl": "0",
+			"fn": "PasswdDel",
+			"tp": "s"
+		}]
+	}
+}
+
+
+/* get Device List */
+{
+	"to": "GREENPOWER",
+	"from": "CLOUD",
+	"type": "cmd",
+	"data": {
+		"id": "xxxx",
+		"command": "getAttribute",
+		"arguments": {
+			"mac": "01020304050607",
+			"ep": "0",
+			"attribute": "mod.device_list",
+			"value": {}
+		}
+	}
+}
+

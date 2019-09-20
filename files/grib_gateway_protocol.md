@@ -1,97 +1,95 @@
-## Gateway
-gateway tid: grib_gateway_xxxxx
+## Platform Gateway Protocol 
 
-### fn attribute list
+ Gateway Device Id: **GRIB_GATEWAY_xxxxxxxxxx**
 
+###  Function list
 | fn             |explain |tp   |
 | ----- |----|---- |
-| gateway.status |网关状态| s    |
-|gateway.reboot|平台下发网关重启|se|
-|gateway.upgrade_firmware|平台下发升级网关固件|se|
+|Version|网关版本|s|
+|Model|硬件型号|s|
+|Reboot|平台下发网关重启|e|
+|FirmwareUpgrade|平台下发升级网关固件|se|
+|RemoteSh|平台下发远程回连|se|
 
 
 
-### Sample
-gateway.status, 设备上报
+### Function Json
+1. Fn[**Version**]:  
+
+Gateway --> Platform, gateway publish topic:**PLATFORM/Set**
+
 ```c
 {
 	"req":"Set",
 	"msg": {
-		"tid": "grib_gateway_30ae7b2b4917",
+		"tid": "GRIB_GATEWAY_1234567890",
 		"fnl": 
 		[
 			{
-				"fn":"gateway.status",
+				"fn":"Version",
 				"tp":"s",
-				"vl": {
-						"version": "v1.0.32.5_forNxp-0-g291a973",
-						"model": "DSI0177",
-						"factory": "dusun",
-						"current_time": 1567494167,
-						"uptime": 103206,
-						"uplinkType": "Ethernet"
-				}
+				"vl": "v1.0.32.5_forNxp-0-g291a973"
 			}
 		]
 	}
 }
 ```
-gateway.reboot, 平台下发
+2. Fn[**Model**]:  
+
+Gateway --> Platform, gateway publish topic:**PLATFORM/Set**
+
 ```c
 {
-	"req":"Exe",
-	"msg":
-	{
-		"tid":"grib_gateway_30ae7b2b4917",
-		"fnl":
+	"req":"Set",
+	"msg": {
+		"tid": "GRIB_GATEWAY_1234567890",
+		"fnl": 
 		[
 			{
-				"fn":"gateway.reboot",
-				"tp":"e",
-				"vl":{
-					"id":"xxxx",
-					"reboot_delay": 0,
-					"ep": 1
-				}
+				"fn":"Model",
+				"tp":"s",
+				"vl": "DSI0177"
 			}
 		]
 	}
 }
 ```
-网关回复
+
+3. Fn[**Reboot**]
+
+Platform --> Gateway, gateway subscribe topic:**GRIB_GATEWAY_1234567890/_Exe**
+
 ```c
 {
 	"res":"100",
 	"msg":
 	{
-		"tid":"grib_gateway_30ae7b2b4917",
+		"tid":"GRIB_GATEWAY_1234567890",
 		"fnl":
 		[
 			{
-				"fn":"gateway.reboot",
-				"tp":"s",
-				"vl":{
-					"id":"xxxx",
-					"ep": 1,
-					"code": 0
-				}
+				"fn":"Reboot",
+				"tp":"e",
+				"vl":"0"
 			}
 		]
 	}
 }
 ```
-gateway.upgrad_firmware 平台下发
+
+4. Fn[**FrimwareUpgrade**]:
+
+   Platform --> Gateway, gateway subscribe topic:**GRIB_GATEWAY_1234567890/_Exe**
+
 ```c
 {
-	"req":"Exe",
+	"res":"100",
 	"msg": {
-		"tid":"grib_gateway_30ae7b2b4917",
+		"tid":"GRIB_GATEWAY_30ae7b2b4917",
 		"fnl": {
-			"fn": "gateway.upgrade_firmware",
+			"fn": "FirmwareUpgrade",
             "tp": "e",
 			"vl": {
-				"ep": 1,
-				"id": "xxxxxxx",
 				"md5sum": "f600f6b5b171b1c19c8eeacdcfde7339",
 				"url": "http://saascloud.oss-cn-shanghai.aliyuncs.com/fireware/fw-1566985560775-262176.bin"
 			},
@@ -99,55 +97,70 @@ gateway.upgrad_firmware 平台下发
 	}
 }
 ```
-网关回复
+Gateway-->Platform, gateway publish topioc:**PLATFORM/Set**
+
 ```c
 {
-	"res":"100",
+	"req":"Set",
 	"msg": {
-		"tid":"grib_gateway_30ae7b2b4917",
+		"tid":"GRIB_GATEWAY_1234567890",
 		"fnl": {
-			"fn": "gateway.upgrade_firmware",
+			"fn": "FirmwareUpgrade",
             "tp": "s",
-			"vl": {
-				"ep": 1,
-				"id": "xxxxxxx",
-				"code":99
-			},
-		},
-	}
-}
-{
-	"res":"100",
-	"msg": {
-		"tid":"grib_gateway_30ae7b2b4917",
-		"fnl": {
-			"fn": "gateway.upgrade_firmware",
-            "tp": "s",
-			"vl": {
-				"ep": 1,
-				"id": "xxxxxxx",
-				"code":97
-			},
-		},
-	}
-}
-
-{
-	"res":"100",
-	"msg": {
-		"tid":"grib_gateway_30ae7b2b4917",
-		"fnl": {
-			"fn": "gateway.upgrade_firmware",
-            "tp": "s",
-			"vl": {
-				"ep": 1,
-				"id": "xxxxxxx",
-				"code":98
-			},
+			"vl": 98,
 		},
 	}
 }
 ```
+
+5. Fn[**RemoteSh**]:
+
+   Platform --> Gateway, gateway subscribe topic:**GRIB_GATEWAY_1234567890/_Exe**
+
+```c
+{
+	"res":"100",
+	"msg": {
+		"tid":"GRIB_GATEWAY_30ae7b2b4917",
+		"fnl": {
+			"fn": "RemoteSh",
+            "tp": "e",
+			"vl":{
+				"server": "114.215.195.44",
+				"port": 3234
+			}
+		}
+	}
+}
+```
+Gateway-->Platform, gateway publish topioc:**PLATFORM/Set**
+
+```c
+{
+	"req":"Set",
+	"msg": {
+		"tid":"GRIB_GATEWAY_1234567890",
+		"fnl": {
+			"fn": "RemoteSh",
+            "tp": "s",
+			"vl": 0,
+		},
+	}
+}
+```
+### vl Explain
+表格中值只针对 fn: **FrimwareUpgrade**, **RemoteSh**  <br>
+
+| **vl** | **Description** |
+| --- | --- |
+| 0 | 成功 |
+| 99 | 命令已经收到，等待执行 |
+| 97 | 升级开始 |
+| 98 | 升级成功 |
+| 108 | 升级时MD5SUM校验失败 |
+| 109 | 升级时固件下载失败 |
+| 110 | 升级失败 |
+
 
 
 
