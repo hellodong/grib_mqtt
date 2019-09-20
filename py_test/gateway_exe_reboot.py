@@ -1,9 +1,9 @@
 import paho.mqtt.client as mqtt
 import json
 
-platReg = "PLATFORM/Reg"
-devId = "grib_gateway_0001/_Reg"
-jsonReg = '{"req":"Reg", "msg": {"tid":"GRIB_GATEWAY_0001", "fnl": [ {"fn":"Status", "tp":"s"}, {"fn":"Upgrade","tp":"e"}] } }'
+platExe = "PLATFORM/Exe"
+devId = "GRIB_GATEWAY_30ae7b63f832/_Set"
+jsonExe = '{"req":"Exe", "msg": {"tid":"GRIB_GATEWAY_30ae7b63f832", "fnl": [ {"fn":"Reboot", "tp":"e", "vl":"0"}] } }'
 
 
 # The callback for when the client receives a CONNACK response from the server.
@@ -12,8 +12,8 @@ def on_connect(client, userdata, flags, rc):
     if 0 == rc:
         print("Subscribe:"+devId)
         client.subscribe(devId, 1)
-        client.publish(platReg, str(jsonReg), 1)
-        print(str(jsonReg))
+        client.publish(platExe, str(jsonExe), 1)
+        print(str(jsonExe))
 
 
 # Subscribing in on_connect() means that if we lose the connection and

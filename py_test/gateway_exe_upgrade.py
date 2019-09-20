@@ -2,8 +2,8 @@ import paho.mqtt.client as mqtt
 import json
 
 platExe = "PLATFORM/Exe"
-devId = "GRIB_GATEWAY_30ae7b2b4917/_Set"
-jsonExe = '{"req":"Exe", "msg": {"tid":"GRIB_GATEWAY_30ae7b2b4917", "fnl": [ {"fn":"FirmwareUpgrade", "tp":"e", "vl":{"md5sum" : "f6668128932180fda90f8a90fd80a", "url":"http://saascloud.oss-cn-shanghai.aliyuncs.com/fireware/fw1566985560775-262176.bin"}}] } }'
+devId = "GRIB_GATEWAY_30ae7b63f832/_Set"
+jsonExe = '{"req":"Exe", "msg": {"tid":"GRIB_GATEWAY_30ae7b63f832", "fnl": [ {"fn":"FirmwareUpgrade", "tp":"e", "vl":{"md5sum" : "f6668128932180fda90f8a90fd80a", "url":"http://saascloud.oss-cn-shanghai.aliyuncs.com/fireware/fw1566985560775-262176.bin"}}] } }'
 
 
 # The callback for when the client receives a CONNACK response from the server.

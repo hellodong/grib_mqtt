@@ -2,8 +2,8 @@ import paho.mqtt.client as mqtt
 import json
 
 platReg = "PLATFORM/Get"
-devId = "GRIB_GATEWAY_30ae7b2b4917/_Get"
-jsonGet = '{"req":"Get", "msg": {"tid":"GRIB_GATEWAY_30ae7b2b4917", "fnl": [ {"fn":"status", "tp":"s"}] } }'
+devId = "GRIB_GATEWAY_30ae7b63f832/_Set"
+jsonGet = '{"req":"Get", "msg": {"tid":"GRIB_GATEWAY_30ae7b2b4917", "fnl": [ {"fn":"Version", "tp":"s"}] } }'
 
 
 # The callback for when the client receives a CONNACK response from the server.

@@ -3,7 +3,7 @@ import json
 
 platReg = "PLATFORM/Reg"
 devId = "GRIB_GATEWAY_30ae7b2b4917/_Reg"
-jsonReg = '{"req":"Reg", "msg": {"tid":"GRIB_GATEWAY_30ae7b2b4917", "fnl": [ {"fn":"status", "tp":"s"}, {"fn":"FirmwareUpgrade","tp":"e"}] } }'
+jsonReg = '{"req":"Reg", "msg": {"tid":"GRIB_GATEWAY_30ae7b2b4917", "fnl": [ {"fn":"Version", "tp":"s"}, {"fn":"Model", "tp":"s"},{"fn":"Reboot", "tp":"se"},{"fn":"FirmwareUpgrade","tp":"se"}] } }'
 
 
 # The callback for when the client receives a CONNACK response from the server.
