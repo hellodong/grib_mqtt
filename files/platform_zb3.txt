@@ -809,6 +809,180 @@ Gateway --> Platform:
 	}
 }
 
+/* Emergency Call Button */
+Ubus --> Gateway:
+{
+	"from": "GREENPOWER",
+	"time": 1569565434,
+	"deviceCode": "00000",
+	"to": "CLOUD",
+	"mac": "30:ae:7b:63:f8:32",
+	"data": {
+		"attribute": "mod.new_device_added",
+		"mac": "086bd7fffeb34e05",
+		"value": {
+			"mac": "086bd7fffeb34e05",
+			"type": "1239",
+			"version": "1.1",
+			"online": 1,
+			"subtype": "",
+			"model": "Dusun",
+			"battery": 100,
+			"epList": [{
+				"ep": "01",
+				"type": "1239"
+			}],
+			"ModelStr": "Key fob"
+		}
+	},
+	"type": "reportAttribute"
+}
+
+Gateway --> Platform:
+{
+	"req": "Set",
+	"msg": {
+		"tid": "ZB3_EmergCaBtn_00158d0001b65c71",
+		"fnl": [
+			{
+				"fn":"Battery",
+				"tp":"s",
+				"vl":100
+			},
+			{
+				"fn":"Version",
+				"tp":"s",
+				"vl":"1.0"
+			}£¬
+			{
+				"fn":"Online",
+				"tp":"s",
+				"vl":1
+			}
+		]
+	}
+}
+
+/* status */
+Ubus --> Gateway:
+{
+	"from": "GREENPOWER",
+	"time": 1569568747,
+	"deviceCode": "00000",
+	"to": "CLOUD",
+	"mac": "30:ae:7b:63:f8:32",
+	"data": {
+		"attribute": "device.zone_status",
+		"mac": "086bd7fffeb34e05",
+		"ep": 1,
+		"value": {
+			"ep": 1,
+			"zone": "panicbtn",
+			"value": "0",
+			"ModelStr": "Key fob"
+		}
+	},
+	"type": "reportAttribute"
+}
+
+Gateway --> Platform:
+{
+	"req": "Set",
+	"msg": {
+		"tid": "ZB3_EmergCaBtn_086bd7fffeb34e05",
+		"fnl": [{
+			"fn": "EmergCaStatus",
+			"tp": "s",
+			"vl": "0"
+		}]
+	}
+}
+
+
+/* GasSensor */
+Ubus --> Gateway:
+{
+	"data": {
+		"attribute": "mod.new_device_added",
+		"mac": "d0cf5efffe3becf5",
+		"value": {
+			"mac": "d0cf5efffe3becf5",
+			"type": "1243",
+			"subtype": "",
+			"version": "1.0",
+			"model": "Dusun",
+			"epList": [{
+				"type": "1243",
+				"ep": "01"
+			}],
+			"online": 1,
+			"battery": 100,
+			"ModelStr": "GasSensor"
+		}
+	},
+	"time": 1569570731,
+	"from": "GREENPOWER",
+	"mac": "30:ae:7b:63:f8:32",
+	"deviceCode": "00000",
+	"to": "CLOUD",
+	"type": "reportAttribute"
+}
+Gateway --> Platform:
+{
+	"req": "Set",
+	"msg": {
+		"tid": "ZB3_GasSensor_d0cf5efffe3becf5",
+		"fnl": [{
+			"fn": "Version",
+			"tp": "s",
+			"vl": "1.0"
+		}, {
+			"fn": "Online",
+			"tp": "s",
+			"vl": "1"
+		}, {
+			"fn": "Battery",
+			"tp": "s",
+			"vl": "100"
+		}]
+	}
+}
+
+Ubus --> Gateway:
+{
+	"data": {
+		"ep": 1,
+		"attribute": "device.zone_status",
+		"mac": "d0cf5efffe3becf5",
+		"value": {
+			"ep": 1,
+			"zone": "co",
+			"ModelStr": "GasSensor",
+			"value": "1"
+		}
+	},
+	"time": 1569571016,
+	"from": "GREENPOWER",
+	"mac": "30:ae:7b:63:f8:32",
+	"deviceCode": "00000",
+	"to": "CLOUD",
+	"type": "reportAttribute"
+}
+
+Gateway --> Platform:
+{
+	"req": "Set",
+	"msg": {
+		"tid": "ZB3_GasSensor_d0cf5efffe3becf5",
+		"fnl": [{
+			"fn": "GasStatus",
+			"tp": "s",
+			"vl": "1"
+		}]
+	}
+}
+
+
 
 /* get Device List */
 {
