@@ -8,8 +8,12 @@
 | LeakSensor| ZB3_LeakSensor_xxxxx |Version<br/>Battery<br/>Online<br/>LeakStatus<br/>|LeakStatus:<br>0 -- 没水， 1 -- 有水|
 | PIRSensor | ZB3_PIRSensor_xxxxxx |Version<br/>Battery<br/>Online<br/>PIRStatus<br/>|PIRStatus:<br>0 -- 没人， 1 -- 有人|
 | SmartPlug | ZB3_SmartPlug_xxxxxx |Version<br/>Online<br/>Energy_Kwh<br/>Power_Kw<br/>Current_A<br/>Onoff<br/>|Onoff:<br>0 -- 断开， 1 -- 闭合|
+| Power Strip | ZB3_SmartPlug_xxxxxx |Version<br/>Online<br/>Onoff<br/>|Onoff:<br>0 -- 断开， 1 -- 闭合|
 | Switch | ZB3_Switch_xxxxxx |Version<br/>Online<br/>Onoff[ep]<br/>|Onoff[ep]:<br>0 -- 断开， 1 -- 闭合|
 | DoorLock | ZB3_DoorLock_xxxxx | Version<br> Model<br> Online<br>PasswdAdd<br>PasswdDel<br>|PasswdAdd: 添加密码<br>PasswdDel:删除密码|
+| SmokeSensor | ZB3_SmokeSensor_xxxxx | Version<br>Online<br>Battery<br>SmokeStatus | SmoeStatus:<br>1 -- 有烟， 0 -- 无烟 |
+| Emergency Call Button | ZB3_EmergCaBtn_xxxx |Version<br>Online<br>Battery<br>EmergCaStatus|EmergCaStatus:<br>1 -- 紧急呼叫， 0 -- 紧急呼叫停止|
+| Gas Sensor | ZB3_GasSensor_xxxx |Version<br>Online<br>Battery<br>GasStatus| GasStatus:<br>1 -- 探测到燃气， 0 -- 未探测到燃气 |
 
 
 ###  Function list
@@ -21,6 +25,9 @@
 |DoorStatus|门磁状态|s|
 |LeakStatus|液漏状态|s|
 |PIRStatus|人体红外状态|s|
+|SmokeStatus| 烟感状态 |s|
+|EmergCaStatus |紧急呼叫状态 |s |
+|GasStatus | 燃气状态 | s|
 |Energy_Kwh|电量计量(KWH)| s |
 |Power_Kw|功率(KW)| s |
 |Current_A|电流(A)| s |
@@ -162,56 +169,110 @@ Gateway-->Platform, gateway publish topioc:**PLATFORM/Set**:
  	}
  }
  ```
+ 7. Fn[**SmokeStatus**]
+ Gateway-->Platform, gateway publish topioc:**PLATFORM/Set**
 
+ ```c
+ {
+ 	"req":"Set",
+ 	"msg": {
+ 		"tid":"ZB3_SmokeSensor_00158d00000000",
+ 		"fnl": {
+ 			"fn": "SmokeStatus",
+             "tp": "s",
+ 			"vl": "1",
+ 		},
+ 	}
+ }
+ ```
 
-
-7. Fn[**Energy_Kwh**]  
+8. Fn[**EmergCaStatus**]
 
    Gateway-->Platform, gateway publish topioc:**PLATFORM/Set**
 
    ```c 
    {
-   	"req":"Set",
-   	"msg":{
-   		"tid":"ZB3_SmartPlug_00155f007483a275"
-   		"fnl":[
-   			{
-   				"fn":"Energy_Kwh",
-   				"tp":"s",
-   				"vl":"0.000"
-   			}
-   		]
+   	"req": "Set",
+   	"msg": {
+   		"tid": "ZB3_EmergCaBtn_xxxxxxxx",
+   		"fnl": [{
+   			"fn": "EmergCaStatus",
+   			"tp": "s",
+   			"vl": "0"
+   		}]
    	}
    }
    ```
 
    
 
-8. Fn[**Power_Kw**]
+9. Fn[**GasStatus**]
 
-    Gateway-->Platform, gateway publish topioc:**PLATFORM/Set** 
+   Gateway-->Platform, gateway publish topioc:**PLATFORM/Set**
 
    ```c 
    {
-   	"req":"Set",
-   	"msg":{
-   		"tid":"ZB3_SmartPlug_00155f007483a275"
-   		"fnl":[
-   			{
-   				"fn":"Power_Kw",
-   				"tp":"s",
-   				"vl":"0.000"
-   			}
-   		]
+   	"req": "Set",
+   	"msg": {
+   		"tid": "ZB3_GasSensor_xxxxxxx",
+   		"fnl": [{
+   			"fn": "GasStatus",
+   			"tp": "s",
+   			"vl": "1"
+   		}]
    	}
    }
    ```
 
    
 
-9. Fn[**Current_A**]
+10. Fn[**Energy_Kwh**]  
 
-    Gateway-->Platform, gateway publish topioc:**PLATFORM/Set** 
+Gateway-->Platform, gateway publish topioc:**PLATFORM/Set**
+
+```c 
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_SmartPlug_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"Energy_Kwh",
+				"tp":"s",
+				"vl":"0.000"
+			}
+		]
+	}
+}
+```
+
+
+
+11. Fn[**Power_Kw**]
+
+Gateway-->Platform, gateway publish topioc:**PLATFORM/Set** 
+
+```c 
+{
+	"req":"Set",
+	"msg":{
+		"tid":"ZB3_SmartPlug_00155f007483a275"
+		"fnl":[
+			{
+				"fn":"Power_Kw",
+				"tp":"s",
+				"vl":"0.000"
+			}
+		]
+	}
+}
+```
+
+
+
+12. Fn[**Current_A**]
+
+Gateway-->Platform, gateway publish topioc:**PLATFORM/Set** 
 
    ```c 
    {
@@ -231,7 +292,7 @@ Gateway-->Platform, gateway publish topioc:**PLATFORM/Set**:
 
    
 
-10.Fn[**Onoff**]
+13. Fn[**Onoff**]
 
 Gateway-->Platform, gateway publish topioc:**PLATFORM/Set** 
 
@@ -283,7 +344,7 @@ Platform --> Gateway, gateway subscribe topic:**ZB3_SmartPlug_14b457fffe7f96a3/_
 
 
 
-11.Fn[**Onoff[ep]**]
+14. Fn[**Onoff[ep]**]
 
 Gateway-->Platform, gateway publish topioc:**PLATFORM/Set** 
 
@@ -333,7 +394,7 @@ Platform --> Gateway, gateway subscribe topic:**ZB3_Switch_14b457fffe83841a/_Exe
 }
 ```
 
-12.Fn[**PasswdAdd**]
+15.Fn[**PasswdAdd**]
 
 Gateway-->Platform, gateway publish topioc:**PLATFORM/Set** 
 
@@ -383,7 +444,7 @@ Platform --> Gateway, gateway subscribe topic:**ZB3_DoorLock_00158d0001b65c71/_E
 }
 ```
 
-13. Fn[**PasswdDel**]
+16. Fn[**PasswdDel**]
 
 Gateway-->Platform, gateway publish topioc:**PLATFORM/Set** 
 
